@@ -129,6 +129,7 @@ jobs:
               -p:PublishSingleFile=true \
               -p:IncludeNativeLibrariesForSelfExtract=true \
               -p:PublishTrimmed=false
+            mv "$publish_dir/PromptPack.Cli" "$publish_dir/promptpack"
             tar -czf "artifacts/promptpack-$runtime.tar.gz" -C "$publish_dir" promptpack
           done
 
