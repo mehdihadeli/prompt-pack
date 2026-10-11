@@ -9,7 +9,7 @@ The useful loop is: select the smallest relevant scope, choose the least destruc
 Create a baseline package so you can see what the collector includes:
 
 ```bash
-promptpack -y markdown -o baseline.md
+pp -y markdown -o baseline.md
 ```
 
 Inspect the directory structure and file summary before adding filters.
@@ -19,7 +19,7 @@ Inspect the directory structure and file summary before adding filters.
 Use `--include` when the task has a clear scope:
 
 ```bash
-promptpack \
+pp \
   -i "src/**/*.cs,tests/**/*.cs,README.md" \
   -y markdown \
   -o implementation.md
@@ -42,7 +42,7 @@ For repeatable selections, put the same values in `promptpack.config.yaml`. Use 
 Estimate the result before sending it to a model:
 
 ```bash
-promptpack -t -b 12000 -y markdown
+pp -t -b 12000 -y markdown
 ```
 
 A budget overflow reports the estimate and exits with code `2`. This makes the command usable in scripts that need to stop before producing an oversized handoff.
@@ -52,8 +52,8 @@ A budget overflow reports the estimate and exits with code `2`. This makes the c
 Clipboard is the default for interactive work. Use a file for review or archival, and stdout for shell pipelines:
 
 ```bash
-promptpack -y json -o context.json
-promptpack -y plain -s > context.txt
+pp -y json -o context.json
+pp -y plain -s > context.txt
 ```
 
 Add `-c` when you want a file or stdout result and a clipboard copy as well.
@@ -61,12 +61,12 @@ Add `-c` when you want a file or stdout result and a clipboard copy as well.
 For shell pipelines, pass a newline-delimited file list through stdin:
 
 ```bash
-git ls-files 'src/**/*.cs' | promptpack -q -y plain -s
+git ls-files 'src/**/*.cs' | pp -q -y plain -s
 ```
 
 For larger handoffs, use `--split-output 2MB` with a file destination. PromptPack creates numbered sibling files. Use `--full-tree` when the model needs to understand repository layout beyond the selected file contents. The older `--include-full-directory-structure` name remains supported.
 
-Before sharing a package, the default built-in security scan surfaces common credential patterns. To use Secretlint instead, install Node.js/npm, then run `promptpack --security-scanner secretlint`. PromptPack invokes `npx @secretlint/quick-start` and reports a clear runtime prerequisite error if `npx` is unavailable.
+Before sharing a package, the default built-in security scan surfaces common credential patterns. To use Secretlint instead, install Node.js/npm, then run `pp --security-scanner secretlint`. PromptPack invokes `npx @secretlint/quick-start` and reports a clear runtime prerequisite error if `npx` is unavailable.
 
 ## 6. Give the package a concrete task
 

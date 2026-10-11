@@ -1,6 +1,6 @@
 # Quickstart
 
-PromptPack packages a local directory into AI-friendly context. Install the standalone release executable, then run it with `promptpack`.
+PromptPack packages a local directory into AI-friendly context. Install the standalone release executable, then run it with `pp`.
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ The script downloads a self-contained executable and does not require NuGet, the
 ## Pack the current directory
 
 ```bash
-promptpack
+pp
 ```
 
 The command uses Markdown output and copies the result to the system clipboard. It does not create an output file unless you provide `-o` or `--output`.
@@ -32,31 +32,31 @@ The generated Markdown contains a summary, repository structure, and selected fi
 Write a file:
 
 ```bash
-promptpack -o promptpack-output.md
+pp -o promptpack-output.md
 ```
 
 Write Markdown to stdout:
 
 ```bash
-promptpack -s
+pp -s
 ```
 
 Write JSON and copy the same content to the clipboard:
 
 ```bash
-promptpack -o context.json -y json -c
+pp -o context.json -y json -c
 ```
 
 Choose plain text for a simple pipeline:
 
 ```bash
-promptpack -y plain -s > context.txt
+pp -y plain -s > context.txt
 ```
 
 Choose XML when your downstream tool benefits from explicit sections:
 
 ```bash
-promptpack -y xml -o context.xml
+pp -y xml -o context.xml
 ```
 
 ## Narrow the files
@@ -64,13 +64,13 @@ promptpack -y xml -o context.xml
 Pack only C# files and the root README:
 
 ```bash
-promptpack -i "**/*.cs,README.md"
+pp -i "**/*.cs,README.md"
 ```
 
 Exclude generated files and documentation (`--ignore` remains supported):
 
 ```bash
-promptpack -e "**/*.generated.cs,docs/**"
+pp -e "**/*.generated.cs,docs/**"
 ```
 
 PromptPack also excludes common build and tool directories, including `.git`, `bin`, `obj`, `node_modules`, `dist`, `build`, `.vs`, and `.vscode`. Patterns from the target directory's `.gitignore` are applied too.
@@ -95,13 +95,13 @@ The global location is `%APPDATA%/PromptPack` on Windows and `$XDG_CONFIG_HOME/P
 Provide one absolute or target-relative path per line. This works well with `git ls-files`:
 
 ```bash
-git ls-files '*.cs' | promptpack -q -s
+git ls-files '*.cs' | pp -q -s
 ```
 
 The built-in conservative security scan runs by default and requires no external installation. It reports likely private keys, AWS access keys, GitHub tokens, and generic secret assignments. To use Secretlint instead, install Node.js/npm and select it explicitly:
 
 ```bash
-promptpack --security-scanner secretlint -y json -o security-review.json
+pp --security-scanner secretlint -y json -o security-review.json
 ```
 
 PromptPack invokes Secretlint through `npx @secretlint/quick-start`; no project-local Secretlint installation is required.

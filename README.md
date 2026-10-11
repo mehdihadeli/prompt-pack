@@ -28,7 +28,7 @@ On Linux or macOS, use the standalone installer. It downloads the latest release
 curl -fsSL https://github.com/mehdihadeli/PromptPack/install.sh | bash
 ```
 
-Then open a new terminal, or add `~/.local/bin` to your `PATH` if the `promptpack` command is not found.
+Then open a new terminal, or add `~/.local/bin` to your `PATH` if the `pp` command is not found.
 
 If you already have the .NET SDK installed, you can use the global tool instead:
 
@@ -39,7 +39,7 @@ dotnet tool install --global PromptPack
 From any project directory, run:
 
 ```bash
-promptpack
+pp
 ```
 
 The default workflow packs the current directory as Markdown and copies the result to the system clipboard. Paste it into your AI assistant, editor, or review workflow.
@@ -51,19 +51,19 @@ The default workflow packs the current directory as Markdown and copies the resu
 
 | Goal                                   | Command                              |
 | -------------------------------------- | ------------------------------------ |
-| Copy the current directory as Markdown | `promptpack`                         |
-| Write Markdown to standard output      | `promptpack -s`                      |
-| Copy explicitly to the clipboard       | `promptpack -c`                      |
-| Write output to a file                 | `promptpack -o context.md`           |
-| Write a file and copy it               | `promptpack -o context.md -c`        |
-| Choose another format                  | `promptpack -y json -o context.json` |
+| Copy the current directory as Markdown | `pp`                                 |
+| Write Markdown to standard output      | `pp -s`                              |
+| Copy explicitly to the clipboard       | `pp -c`                              |
+| Write output to a file                 | `pp -o context.md`                   |
+| Write a file and copy it               | `pp -o context.md -c`                |
+| Choose another format                  | `pp -y json -o context.json`         |
 
 Supported styles are `markdown` (default), `xml`, `json`, and `plain`.
 
 For help:
 
 ```bash
-promptpack --help
+pp --help
 ```
 
 ## 🧰 Common Usage
@@ -71,14 +71,14 @@ promptpack --help
 Pack a directory other than the current one:
 
 ```bash
-promptpack src
+pp src
 ```
 
 Include only selected files or add exclusions:
 
 ```bash
-promptpack -i "src/**/*.cs,README.md"
-promptpack -e "**/*.generated.cs,docs/**"
+pp -i "src/**/*.cs,README.md"
+pp -e "**/*.generated.cs,docs/**"
 ```
 
 PromptPack also uses common build exclusions and patterns from `.gitignore`.
@@ -89,13 +89,13 @@ PromptPack also uses common build exclusions and patterns from `.gitignore`.
 Read file paths from another command:
 
 ```bash
-git ls-files '*.cs' '*.csproj' | promptpack -q -s
+git ls-files '*.cs' '*.csproj' | pp -q -s
 ```
 
 Create compact context for a code review:
 
 ```bash
-promptpack -x -r -l -t -o review-context.md
+pp -x -r -l -t -o review-context.md
 ```
 
 Include the full repository tree when the model needs paths outside the selected files:
@@ -104,13 +104,13 @@ Include the full repository tree when the model needs paths outside the selected
 > `--full-tree` adds a separate tree of non-ignored paths without adding every path's contents to the selected file set. The older `--include-full-directory-structure` name remains supported.
 
 ```bash
-promptpack --full-tree -o context.md
+pp --full-tree -o context.md
 ```
 
 Create metadata-only JSON:
 
 ```bash
-promptpack -y json -f -d -o metadata.json
+pp -y json -f -d -o metadata.json
 ```
 
 ## ✨ Features
@@ -146,10 +146,10 @@ Choose the format based on where the result is going:
 
 | Format     | Best for                                                 | Command                                |
 | ---------- | -------------------------------------------------------- | -------------------------------------- |
-| Markdown   | Human-readable review and direct AI prompts              | `promptpack -y markdown -o context.md` |
-| XML        | Consumers that benefit from explicit structural sections | `promptpack -y xml -o context.xml`     |
-| JSON       | Scripts and tools that need structured data              | `promptpack -y json -o context.json`   |
-| Plain text | Simple pipelines and tools without Markdown parsing      | `promptpack -y plain -s`               |
+| Markdown   | Human-readable review and direct AI prompts              | `pp -y markdown -o context.md`         |
+| XML        | Consumers that benefit from explicit structural sections | `pp -y xml -o context.xml`             |
+| JSON       | Scripts and tools that need structured data              | `pp -y json -o context.json`           |
+| Plain text | Simple pipelines and tools without Markdown parsing      | `pp -y plain -s`                       |
 
 PromptPack does not upload repository data. It writes to local files, standard output, or the system clipboard.
 
@@ -229,13 +229,13 @@ PromptPack uses one packing command. Options and the optional directory argument
 promptpack [DIRECTORY] [OPTIONS]
 ```
 
-`DIRECTORY` defaults to the current directory (`.`). Run `promptpack --help` for the generated terminal reference.
+`DIRECTORY` defaults to the current directory (`.`). Run `pp --help` for the generated terminal reference.
 
 ### Positional arguments
 
 | Argument      | Required | Default | Description        | Example          |
 | ------------- | -------- | ------- | ------------------ | ---------------- |
-| `[DIRECTORY]` | No       | `.`     | Directory to pack. | `promptpack src` |
+| `[DIRECTORY]` | No       | `.`     | Directory to pack. | `pp src`         |
 
 ### Command options
 
@@ -247,8 +247,8 @@ promptpack [DIRECTORY] [OPTIONS]
 <thead><tr><th>Option</th><th>Purpose</th><th>Example</th></tr></thead>
 <tbody>
 <tr><td><code>-o, --output &lt;path&gt;</code></td><td>Write output to a file; clipboard is the default destination.</td><td><code>promptpack -o context.md</code></td></tr>
-<tr><td><code>-y, --style &lt;format&gt;</code></td><td>Select <code>markdown</code>, <code>xml</code>, <code>json</code>, or <code>plain</code>.</td><td><code>promptpack -y json -o context.json</code></td></tr>
-<tr><td><code>-s, --stdout</code></td><td>Write output to standard output.</td><td><code>promptpack -s &gt; context.md</code></td></tr>
+<tr><td><code>-y, --style &lt;format&gt;</code></td><td>Select <code>markdown</code>, <code>xml</code>, <code>json</code>, or <code>plain</code>.</td><td><code>pp -y json -o context.json</code></td></tr>
+<tr><td><code>-s, --stdout</code></td><td>Write output to standard output.</td><td><code>pp -s &gt; context.md</code></td></tr>
 <tr><td><code>-c, --copy</code></td><td>Copy output to the clipboard in addition to another destination.</td><td><code>promptpack -o context.md -c</code></td></tr>
 <tr><td><code>-z, --split-output &lt;size&gt;</code></td><td>Split output into numbered parts.</td><td><code>promptpack -z 2MB -o context.json</code></td></tr>
 </tbody></table>
@@ -260,8 +260,8 @@ promptpack [DIRECTORY] [OPTIONS]
 <table>
 <thead><tr><th>Option</th><th>Config property</th><th>Purpose</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><code>-i, --include &lt;patterns&gt;</code></td><td><code>include</code></td><td>Include only matching files.</td><td><code>promptpack -i "src/**/*.cs,README.md"</code></td></tr>
-<tr><td><code>-e, --exclude, --ignore &lt;patterns&gt;</code></td><td><code>exclude</code></td><td>Add exclusion patterns.</td><td><code>promptpack -e "**/*.generated.cs,docs/**"</code></td></tr>
+<tr><td><code>-i, --include &lt;patterns&gt;</code></td><td><code>include</code></td><td>Include only matching files.</td><td><code>pp -i "src/**/*.cs,README.md"</code></td></tr>
+<tr><td><code>-e, --exclude, --ignore &lt;patterns&gt;</code></td><td><code>exclude</code></td><td>Add exclusion patterns.</td><td><code>pp -e "**/*.generated.cs,docs/**"</code></td></tr>
 <tr><td><code>--no-gitignore</code></td><td><code>useGitignore</code></td><td>Disable <code>.gitignore</code> and <code>.ignore</code>.</td><td><code>promptpack --no-gitignore</code></td></tr>
 <tr><td><code>--no-default-patterns</code></td><td><code>useDefaultPatterns</code></td><td>Disable built-in exclusions.</td><td><code>promptpack --no-default-patterns</code></td></tr>
 <tr><td><code>-q, --stdin</code></td><td></td><td>Read one file path per input line.</td><td><code>git ls-files '*.cs' | promptpack -q -s</code></td></tr>
@@ -287,7 +287,7 @@ promptpack [DIRECTORY] [OPTIONS]
 <table>
 <thead><tr><th>Option</th><th>Config property</th><th>Purpose</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><code>-x, --compress</code></td><td><code>compress</code></td><td>Reduce implementation detail while retaining structure.</td><td><code>promptpack -x -o compact.md</code></td></tr>
+<tr><td><code>-x, --compress</code></td><td><code>compress</code></td><td>Reduce implementation detail while retaining structure.</td><td><code>pp -x -o compact.md</code></td></tr>
 <tr><td><code>-r, --remove-comments</code></td><td><code>removeComments</code></td><td>Remove supported comments.</td><td><code>promptpack -r -o review.md</code></td></tr>
 <tr><td><code>-l, --remove-empty-lines</code></td><td><code>removeEmptyLines</code></td><td>Remove blank lines.</td><td><code>promptpack -l -o compact.md</code></td></tr>
 <tr><td><code>-n, --output-show-line-numbers</code></td><td></td><td>Prefix generated source lines with line numbers.</td><td><code>promptpack -n -o debugging.md</code></td></tr>
@@ -311,7 +311,7 @@ promptpack [DIRECTORY] [OPTIONS]
 <tr><td><code>-k, --security-scan</code></td><td><code>securityScan</code></td><td>Report common credential and private-key patterns; enabled by default.</td><td><code>promptpack -k -o context.md</code></td></tr>
 <tr><td><code>--security-scanner &lt;name&gt;</code></td><td><code>securityScanner</code></td><td>Choose <code>built-in</code> (default) or <code>secretlint</code> via Node.js/npm.</td><td><code>promptpack --security-scanner secretlint -o context.md</code></td></tr>
 <tr><td><code>-w, --verbose</code></td><td></td><td>Enable detailed processing and configuration logging.</td><td><code>promptpack -w -o context.md</code></td></tr>
-<tr><td><code>--help</code></td><td></td><td>Show command usage and option help.</td><td><code>promptpack --help</code></td></tr>
+<tr><td><code>--help</code></td><td></td><td>Show command usage and option help.</td><td><code>pp --help</code></td></tr>
 <tr><td><code>-v, --version</code></td><td></td><td>Show the installed version.</td><td><code>promptpack --version</code></td></tr>
 </tbody></table>
 </details>
@@ -327,19 +327,19 @@ Use `promptpack --init` to create a starter JSON file. Configuration is layered 
 Compact Markdown for a code review:
 
 ```bash
-promptpack -i "src/**,tests/**" -x -r -l -t -o review-context.md
+pp -i "src/**,tests/**" -x -r -l -t -o review-context.md
 ```
 
 Metadata-only JSON for an inventory check:
 
 ```bash
-promptpack -y json -f -d -k -o metadata.json
+pp -y json -f -d -k -o metadata.json
 ```
 
 Line-numbered XML for debugging a targeted directory:
 
 ```bash
-promptpack src -y xml -n -o src-context.xml
+pp src -y xml -n -o src-context.xml
 ```
 
 The same options are also documented in [docs/reference/cli.md](docs/reference/cli.md).

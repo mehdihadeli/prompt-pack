@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>promptpack</ToolCommandName>
+    <ToolCommandName>pp</ToolCommandName>
     <PackageId>PromptPack</PackageId>
   </PropertyGroup>
 
