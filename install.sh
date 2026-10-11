@@ -29,6 +29,7 @@ mkdir -p "$install_dir"
 curl --fail --location --silent --show-error "$download_url" --output "$temporary_archive"
 tar --extract --gzip --file "$temporary_archive" --directory "$install_dir"
 chmod +x "$install_dir/promptpack"
+ln -sfn promptpack "$install_dir/pp"
 
 printf 'PromptPack installed to %s/promptpack\n' "$install_dir"
 if [[ ":${PATH}:" != *":${install_dir}:"* ]]; then

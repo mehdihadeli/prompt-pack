@@ -17,14 +17,14 @@ Example config:
 }
 ```
 
-Run commands with the published `promptpack` .NET tool.
+Run commands with the published `PromptPack` .NET tool using its `pp` command.
 
 PromptPack is a local CLI. It does not fetch remote repositories or upload generated context. Its normal interactive workflow copies Markdown to the clipboard; use `--output` for a file and `--stdout` for a pipeline.
 
 ## Usage
 
 ```text
-promptpack [directory] [options]
+pp [directory] [options]
 ```
 
 The directory defaults to `.`.
@@ -33,16 +33,16 @@ The directory defaults to `.`.
 
 | Argument      | Required | Default | Description        | Example          |
 | ------------- | -------- | ------- | ------------------ | ---------------- |
-| `[directory]` | No       | `.`     | Directory to pack. | `promptpack src` |
+| `[directory]` | No       | `.`     | Directory to pack. | `pp src`         |
 
 ### Output formats
 
 | Format     | Typical use                                              | Example                                |
 | ---------- | -------------------------------------------------------- | -------------------------------------- |
-| `markdown` | Reviewable context and direct AI prompts; default format | `promptpack -y markdown -o context.md` |
-| `xml`      | Explicit sections for structured consumers               | `promptpack -y xml -o context.xml`     |
-| `json`     | Programmatic inspection and automation                   | `promptpack -y json -o context.json`   |
-| `plain`    | Text-only shell pipelines                                | `promptpack -y plain -s`               |
+| `markdown` | Reviewable context and direct AI prompts; default format | `pp -y markdown -o context.md`         |
+| `xml`      | Explicit sections for structured consumers               | `pp -y xml -o context.xml`             |
+| `json`     | Programmatic inspection and automation                   | `pp -y json -o context.json`           |
+| `plain`    | Text-only shell pipelines                                | `pp -y plain -s`                       |
 
 When no destination is supplied, PromptPack copies the generated output to the clipboard. `--copy` is additive: it copies output even when `--output` or `--stdout` is also supplied.
 
@@ -113,9 +113,9 @@ When no destination is supplied, PromptPack copies the generated output to the c
 Examples:
 
 ```bash
-promptpack -y xml -o context.xml
-promptpack src --include "**/*.cs,**/*.csproj"
-promptpack --remote https://github.com/org/repo.git --remote-branch main -o remote-context.md
+pp -y xml -o context.xml
+pp src --include "**/*.cs,**/*.csproj"
+pp --remote https://github.com/org/repo.git --remote-branch main -o remote-context.md
 ```
 
 Configuration files can be named `promptpack.config.json`, `promptpack.config.yaml`, or `promptpack.config.yml`. Precedence is global user config, ancestor/repository config, explicit `--config`, then command-line values. Global files live under `%APPDATA%/PromptPack` on Windows or `$XDG_CONFIG_HOME/PromptPack` / `~/.config/PromptPack` elsewhere. Remote packing requires `git` on `PATH`; the temporary clone is removed after completion.
@@ -123,8 +123,8 @@ Configuration files can be named `promptpack.config.json`, `promptpack.config.ya
 Example:
 
 ```bash
-printf 'src/Program.cs\nsrc/Commands/PackCommand.cs\n' | promptpack -q -s
-promptpack -y json -k -z 2MB -o context.json
+printf 'src/Program.cs\nsrc/Commands/PackCommand.cs\n' | pp -q -s
+pp -y json -k -z 2MB -o context.json
 ```
 
 ## Exit behavior
@@ -136,7 +136,7 @@ A successful pack returns exit code `0`. A token budget overflow returns exit co
 Prepare a focused code-review package:
 
 ```bash
-promptpack \
+pp \
   -i "src/**/*.cs,tests/**/*.cs" \
   -e "**/*.generated.cs" \
   -x -r -l -t \
@@ -147,7 +147,7 @@ promptpack \
 Prepare a bounded CI handoff:
 
 ```bash
-promptpack -y json -b 50000 -k -o context.json
+pp -y json -b 50000 -k -o context.json
 ```
 
 The command returns `2` when the estimated output exceeds 50,000 tokens. A regular command failure returns another nonzero code.
@@ -155,7 +155,7 @@ The command returns `2` when the estimated output exceeds 50,000 tokens. A regul
 Prepare context from a tracked file list:
 
 ```bash
-git ls-files 'src/**/*.cs' 'tests/**/*.cs' | promptpack -q -y plain -s > tracked.txt
+git ls-files 'src/**/*.cs' 'tests/**/*.cs' | pp -q -y plain -s > tracked.txt
 ```
 
 ## Common recipes
@@ -163,17 +163,17 @@ git ls-files 'src/**/*.cs' 'tests/**/*.cs' | promptpack -q -y plain -s > tracked
 Compact Markdown for a code review:
 
 ```bash
-promptpack -y markdown -x -r -l -t
+pp -y markdown -x -r -l -t
 ```
 
 Metadata-only JSON:
 
 ```bash
-promptpack -y json -f -d -o metadata.json
+pp -y json -f -d -o metadata.json
 ```
 
 Line-numbered XML for a targeted directory:
 
 ```bash
-promptpack src -y xml -o src-context.xml -n
+pp src -y xml -o src-context.xml -n
 ```

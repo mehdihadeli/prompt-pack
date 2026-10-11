@@ -49,7 +49,7 @@ features:
 
 ## Built for focused context
 
-PromptPack is a local .NET CLI. It reads the repository you point it at, applies selection and processing rules, then creates one merged representation for AI analysis. The default format is Markdown and the default destination is the system clipboard, so the normal loop is short: run `promptpack`, paste, continue.
+PromptPack is a local .NET CLI. It reads the repository you point it at, applies selection and processing rules, then creates one merged representation for AI analysis. The default format is Markdown and the default destination is the system clipboard, so the normal loop is short: run `pp`, paste, continue.
 
 <div class="home-grid">
   <a href="/guide/quickstart" class="home-grid-item">
