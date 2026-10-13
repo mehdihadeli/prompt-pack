@@ -119,6 +119,12 @@ Drafter release, and uploads the archives. Release Drafter runs with
 `if: always()` so release notes remain current when an artifact step fails;
 the workflow still remains failed until the artifact problem is fixed.
 
+The pack step passes the calculated version as `ReleasePackageVersion`. The
+CLI project applies it to `PackageVersion` and `NuGetPackageVersion` after
+NBGV's `GetBuildVersion` target, preserving versions such as
+`1.1.0-preview.1.26284.18` instead of NBGV's default `1.1.0-preview-0001`.
+Local builds without `ReleasePackageVersion` keep NBGV's default versioning.
+
 Before pushing a release tag, run:
 
 ```bash

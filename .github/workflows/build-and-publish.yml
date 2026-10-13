@@ -85,7 +85,7 @@ jobs:
 
   publish:
     name: Publish package and release assets
-    if: startsWith(github.ref, 'refs/tags/v') || (github.ref == 'refs/heads/main' && contains(needs['calculate-version'].outputs.version, '-preview.') && !contains(needs['calculate-version'].outputs.version, '-preview.0'))
+    if: startsWith(github.ref, 'refs/tags/v') || (github.ref == 'refs/heads/main' && needs['calculate-version'].outputs.environment == 'dev')
     needs:
       - build-test
       - calculate-version
@@ -109,7 +109,7 @@ jobs:
         run: dotnet restore src/PromptPack.Cli/PromptPack.Cli.csproj
 
       - name: Pack
-        run: dotnet pack src/PromptPack.Cli/PromptPack.Cli.csproj --configuration Release --no-restore --output artifacts -p:PublicRelease=true -p:PackageVersion=${{ needs['calculate-version'].outputs.version }}
+        run: dotnet pack src/PromptPack.Cli/PromptPack.Cli.csproj --configuration Release --no-restore --output artifacts -p:PublicRelease=true -p:ReleasePackageVersion="${{ needs['calculate-version'].outputs.version }}"
 
       - name: Publish to NuGet.org
         run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
