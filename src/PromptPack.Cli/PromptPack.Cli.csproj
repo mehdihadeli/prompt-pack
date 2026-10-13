@@ -20,4 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     <PackageReference Include="TextCopy" />
   </ItemGroup>
+
+  <Target Name="ApplyReleasePackageVersion" AfterTargets="GetBuildVersion" Condition="'$(ReleasePackageVersion)' != ''">
+    <PropertyGroup>
+      <PackageVersion>$(ReleasePackageVersion)</PackageVersion>
+      <NuGetPackageVersion>$(ReleasePackageVersion)</NuGetPackageVersion>
+    </PropertyGroup>
+  </Target>
 </Project>
