@@ -2,9 +2,7 @@
 
 PromptPack separates repository discovery, content shaping, and output generation into a small local pipeline.
 
-The source-project boundaries and contributor rules are documented in the
-[development architecture guide](./development-architecture.md). This page
-focuses on what happens when an end user runs PromptPack.
+This page focuses on what happens when an end user runs PromptPack.
 
 ```mermaid
 flowchart LR

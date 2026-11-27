@@ -381,7 +381,7 @@ dotnet build PromptPack.slnx
 dotnet test --solution PromptPack.slnx
 ```
 
-Documentation uses VitePress. Run it from `docs/` with `npm install` and `npm run dev`.
+Documentation uses Nextra and Next.js with Node.js 22 or later. Run it from `docs/` with `npm ci` and `npm run dev`. See the [documentation site guide](docs/SITE.md) for content editing, checks, and GitHub Pages publishing.
 
 ## License
 
