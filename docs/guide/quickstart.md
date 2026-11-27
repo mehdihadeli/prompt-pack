@@ -5,17 +5,39 @@ PromptPack packages a local directory into AI-friendly context. Install the stan
 ## Prerequisites
 
 - A repository or directory to pack
-- Clipboard support when using the default output destination
+* Clipboard support when you use the default output destination
+* .NET SDK 10 or later for the global tool path
 
 ## Install
 
-On Linux or macOS, install or update the published tool with:
+<Tabs label="Install method">
+  <Tab title="Linux or macOS">
+
+Install or update the published standalone tool:
 
 ```bash
 curl -fsSL https://github.com/mehdihadeli/PromptPack/install.sh | bash
 ```
 
-The script downloads a self-contained executable and does not require NuGet, the .NET SDK, or `dotnet tool`. Windows users can install the .NET global tool with `dotnet tool install --global PromptPack`, or use a release executable when one is published for their platform.
+The script downloads a self-contained executable. It does not require NuGet, the .NET SDK, or `dotnet tool`.
+
+  </Tab>
+  <Tab title="Windows">
+
+Install the .NET global tool:
+
+```bash
+dotnet tool install --global PromptPack
+```
+
+Use a release executable when one is published for your platform.
+
+  </Tab>
+</Tabs>
+
+<Note title="One command, one package">
+Every example below assumes `pp` is on your `PATH`. Run the commands from the repository you want to pack.
+</Note>
 
 ## Pack the current directory
 

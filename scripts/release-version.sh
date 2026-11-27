@@ -5,16 +5,16 @@ set -euo pipefail
 usage() {
   cat <<'EOF'
 Usage:
-  ./release-version.sh prepare-train <major.minor.patch>
-  ./release-version.sh prepare-rc <major.minor.patch>
-  ./release-version.sh prepare-stable <major.minor.patch>
-  ./release-version.sh tag
+  ./scripts/release-version.sh prepare-train <major.minor.patch>
+  ./scripts/release-version.sh prepare-rc <major.minor.patch>
+  ./scripts/release-version.sh prepare-stable <major.minor.patch>
+  ./scripts/release-version.sh tag
 
 Examples:
-  ./release-version.sh prepare-train 1.1.0
-  ./release-version.sh prepare-rc 1.0.0
-  ./release-version.sh prepare-stable 1.0.0
-  ./release-version.sh tag
+  ./scripts/release-version.sh prepare-train 1.1.0
+  ./scripts/release-version.sh prepare-rc 1.0.0
+  ./scripts/release-version.sh prepare-stable 1.0.0
+  ./scripts/release-version.sh tag
 EOF
 }
 

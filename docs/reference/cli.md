@@ -1,8 +1,12 @@
-# CLI Reference
+# CLI reference
 
 ## Configuration and input
 
-PromptPack reads `promptpack.config.json`, `promptpack.config.yaml`, or `promptpack.config.yml`. Configuration is merged in this order: global user config, repository and ancestor configs, then `--config` and command-line values. On Windows, global files live under `%APPDATA%/PromptPack`; on Linux and macOS, use `$XDG_CONFIG_HOME/PromptPack` or `~/.config/PromptPack`.
+PromptPack reads `promptpack.config.json`, `promptpack.config.yaml`, or `promptpack.config.yml`. Configuration merges in this order: global user config, repository and ancestor configs, then `--config` and command-line values.
+
+<Note title="Where global settings live">
+On Windows, global files live under `%APPDATA%/PromptPack`. On Linux and macOS, use `$XDG_CONFIG_HOME/PromptPack` or `~/.config/PromptPack`.
+</Note>
 
 Example config:
 
@@ -48,69 +52,68 @@ When no destination is supplied, PromptPack copies the generated output to the c
 
 ## Command options
 
-<!-- markdownlint-disable MD033 -->
-<details open>
-<summary><strong>Output</strong></summary>
+<AccordionGroup>
+<Accordion title="Output">
 
-<table><thead><tr><th>Option</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>-o, --output &lt;path&gt;</code></td><td>Write output to a file; clipboard is the default destination.</td></tr>
-<tr><td><code>-y, --style &lt;format&gt;</code></td><td>Select <code>markdown</code>, <code>xml</code>, <code>json</code>, or <code>plain</code>.</td></tr>
-<tr><td><code>-s, --stdout</code></td><td>Write generated content to stdout.</td></tr>
-<tr><td><code>-c, --copy</code></td><td>Copy output to the clipboard in addition to another destination.</td></tr>
-<tr><td><code>-z, --split-output &lt;size&gt;</code></td><td>Split output into numbered parts.</td></tr>
-</tbody></table>
-</details>
+| Option | Purpose |
+| --- | --- |
+| `-o, --output <path>` | Write output to a file; the clipboard is the default destination. |
+| `-y, --style <format>` | Select `markdown`, `xml`, `json`, or `plain`. |
+| `-s, --stdout` | Write generated content to stdout. |
+| `-c, --copy` | Copy output to the clipboard in addition to another destination. |
+| `-z, --split-output <size>` | Split output into numbered parts. |
 
-<details open>
-<summary><strong>Selection, input, and repository</strong></summary>
+</Accordion>
 
-<table><thead><tr><th>Option</th><th>Config property</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>-i, --include &lt;patterns&gt;</code></td><td><code>include</code></td><td>Include only matching files.</td></tr>
-<tr><td><code>-e, --exclude, --ignore &lt;patterns&gt;</code></td><td><code>exclude</code></td><td>Add exclusion patterns.</td></tr>
-<tr><td><code>--no-gitignore</code></td><td><code>useGitignore</code></td><td>Disable <code>.gitignore</code> and <code>.ignore</code>.</td></tr>
-<tr><td><code>--no-default-patterns</code></td><td><code>useDefaultPatterns</code></td><td>Disable built-in exclusions.</td></tr>
-<tr><td><code>-q, --stdin</code></td><td></td><td>Read one file path per stdin line.</td></tr>
-<tr><td><code>--init</code></td><td></td><td>Create a starter configuration file.</td></tr>
-<tr><td><code>-g, --config &lt;path&gt;</code></td><td></td><td>Load an explicit JSON or YAML configuration file.</td></tr>
-<tr><td><code>--remote &lt;url&gt;</code></td><td></td><td>Clone and pack a Git repository temporarily.</td></tr>
-<tr><td><code>--remote-branch &lt;name&gt;</code></td><td></td><td>Select a branch for <code>--remote</code>.</td></tr>
-</tbody></table>
-</details>
+<Accordion title="Selection, input, and repository">
 
-<details open>
-<summary><strong>Processing and context</strong></summary>
+| Option | Config property | Purpose |
+| --- | --- | --- |
+| `-i, --include <patterns>` | `include` | Include only matching files. |
+| `-e, --exclude, --ignore <patterns>` | `exclude` | Add exclusion patterns. |
+| `--no-gitignore` | `useGitignore` | Disable `.gitignore` and `.ignore`. |
+| `--no-default-patterns` | `useDefaultPatterns` | Disable built-in exclusions. |
+| `-q, --stdin` | | Read one file path per stdin line. |
+| `--init` | | Create a starter configuration file. |
+| `-g, --config <path>` | | Load an explicit JSON or YAML configuration file. |
+| `--remote <url>` | | Clone and pack a Git repository temporarily. |
+| `--remote-branch <name>` | | Select a branch for `--remote`. |
 
-<table><thead><tr><th>Option</th><th>Config property</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>-x, --compress</code></td><td><code>compress</code></td><td>Reduce implementation detail while retaining structure.</td></tr>
-<tr><td><code>-r, --remove-comments</code></td><td><code>removeComments</code></td><td>Remove supported comments.</td></tr>
-<tr><td><code>-l, --remove-empty-lines</code></td><td><code>removeEmptyLines</code></td><td>Remove blank lines.</td></tr>
-<tr><td><code>-n, --output-show-line-numbers</code></td><td></td><td>Prefix generated source lines with line numbers.</td></tr>
-<tr><td><code>-m, --no-file-summary</code></td><td></td><td>Omit generated file metadata.</td></tr>
-<tr><td><code>-d, --no-directory-structure</code></td><td></td><td>Omit the generated directory tree.</td></tr>
-<tr><td><code>-f, --no-files</code></td><td></td><td>Omit file contents while retaining metadata and structure.</td></tr>
-<tr><td><code>-j, --header-text &lt;text&gt;</code></td><td><code>headerText</code></td><td>Add custom header text.</td></tr>
-<tr><td><code>-p, --instruction-file-path &lt;path&gt;</code></td><td><code>instructionFilePath</code></td><td>Include instructions read from a file.</td></tr>
-<tr><td><code>-a, --full-tree</code></td><td><code>includeFullDirectoryStructure</code></td><td>Include a separate full tree of non-ignored paths. The older <code>--include-full-directory-structure</code> name remains supported.</td></tr>
-</tbody></table>
-</details>
+</Accordion>
 
-<details open>
-<summary><strong>Analysis and general</strong></summary>
+<Accordion title="Processing and context">
 
-<table><thead><tr><th>Option</th><th>Config property</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>-t, --token-count</code></td><td></td><td>Display total and largest per-file estimates.</td></tr>
-<tr><td><code>-b, --token-budget &lt;number&gt;</code></td><td></td><td>Return exit code <code>2</code> when output exceeds the estimate.</td></tr>
-<tr><td><code>-k, --security-scan</code></td><td><code>securityScan</code></td><td>Report common credential and private-key patterns; enabled by default.</td></tr>
-<tr><td><code>--security-scanner &lt;name&gt;</code></td><td><code>securityScanner</code></td><td>Choose <code>built-in</code> (default) or <code>secretlint</code> via Node.js/npm.</td></tr>
-<tr><td><code>-w, --verbose</code></td><td></td><td>Enable detailed processing and configuration logging.</td></tr>
-<tr><td><code>--help</code></td><td></td><td>Show command usage and option help.</td></tr>
-<tr><td><code>-v, --version</code></td><td></td><td>Show the installed version.</td></tr>
-</tbody></table>
-</details>
+| Option | Config property | Purpose |
+| --- | --- | --- |
+| `-x, --compress` | `compress` | Reduce implementation detail while retaining structure. |
+| `-r, --remove-comments` | `removeComments` | Remove supported comments. |
+| `-l, --remove-empty-lines` | `removeEmptyLines` | Remove blank lines. |
+| `-n, --output-show-line-numbers` | | Prefix generated source lines with line numbers. |
+| `-m, --no-file-summary` | | Omit generated file metadata. |
+| `-d, --no-directory-structure` | | Omit the generated directory tree. |
+| `-f, --no-files` | | Omit file contents while retaining metadata and structure. |
+| `-j, --header-text <text>` | `headerText` | Add custom header text. |
+| `-p, --instruction-file-path <path>` | `instructionFilePath` | Include instructions read from a file. |
+| `-a, --full-tree` | `includeFullDirectoryStructure` | Include a separate full tree of non-ignored paths. The older `--include-full-directory-structure` name remains supported. |
 
-<!-- markdownlint-enable MD033 -->
+</Accordion>
 
-Examples:
+<Accordion title="Analysis and general">
+
+| Option | Config property | Purpose |
+| --- | --- | --- |
+| `-t, --token-count` | | Display total and largest per-file estimates. |
+| `-b, --token-budget <number>` | | Return exit code `2` when output exceeds the estimate. |
+| `-k, --security-scan` | `securityScan` | Report common credential and private-key patterns; enabled by default. |
+| `--security-scanner <name>` | `securityScanner` | Choose `built-in` (default) or `secretlint` via Node.js/npm. |
+| `-w, --verbose` | | Enable detailed processing and configuration logging. |
+| `--help` | | Show command usage and option help. |
+| `-v, --version` | | Show the installed version. |
+
+</Accordion>
+</AccordionGroup>
+
+## Examples
 
 ```bash
 pp -y xml -o context.xml
@@ -118,22 +121,17 @@ pp src --include "**/*.cs,**/*.csproj"
 pp --remote https://github.com/org/repo.git --remote-branch main -o remote-context.md
 ```
 
-Configuration files can be named `promptpack.config.json`, `promptpack.config.yaml`, or `promptpack.config.yml`. Precedence is global user config, ancestor/repository config, explicit `--config`, then command-line values. Global files live under `%APPDATA%/PromptPack` on Windows or `$XDG_CONFIG_HOME/PromptPack` / `~/.config/PromptPack` elsewhere. Remote packing requires `git` on `PATH`; the temporary clone is removed after completion.
-
-Example:
-
-```bash
-printf 'src/Program.cs\nsrc/Commands/PackCommand.cs\n' | pp -q -s
-pp -y json -k -z 2MB -o context.json
-```
+<Note title="Remote packing">
+`--remote` requires `git` on `PATH`. PromptPack removes the temporary clone when it finishes.
+</Note>
 
 ## Exit behavior
 
 A successful pack returns exit code `0`. A token budget overflow returns exit code `2`. Unexpected failures are reported and return a nonzero exit code.
 
-## Scenario recipes
+## Recipes
 
-Prepare a focused code-review package:
+### Focused code review
 
 ```bash
 pp \
@@ -144,35 +142,33 @@ pp \
   -o review.md
 ```
 
-Prepare a bounded CI handoff:
+### Bounded CI handoff
 
 ```bash
 pp -y json -b 50000 -k -o context.json
 ```
 
-The command returns `2` when the estimated output exceeds 50,000 tokens. A regular command failure returns another nonzero code.
+The command exits with `2` when the estimate exceeds 50,000 tokens. A regular command failure returns another nonzero code.
 
-Prepare context from a tracked file list:
+### Context from a tracked file list
 
 ```bash
 git ls-files 'src/**/*.cs' 'tests/**/*.cs' | pp -q -y plain -s > tracked.txt
 ```
 
-## Common recipes
-
-Compact Markdown for a code review:
+### Compact Markdown
 
 ```bash
 pp -y markdown -x -r -l -t
 ```
 
-Metadata-only JSON:
+### Metadata-only JSON
 
 ```bash
 pp -y json -f -d -o metadata.json
 ```
 
-Line-numbered XML for a targeted directory:
+### Line-numbered XML
 
 ```bash
 pp src -y xml -o src-context.xml -n

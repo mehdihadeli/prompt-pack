@@ -7,11 +7,10 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
-        <!-- Package Metadata -->
-        <Authors>Your Name</Authors>
+        <Authors>Mehdi Hadeli</Authors>
         <Description>AI-friendly repository context packer for .NET</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <RepositoryUrl>https://github.com/yourusername/PromptPack</RepositoryUrl>
+        <RepositoryUrl>https://github.com/mehdihadeli/prompt-pack</RepositoryUrl>
         <PackageTags>ai;llm;code-analysis;repository;context</PackageTags>
     </PropertyGroup>
 
